@@ -5,6 +5,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -23,6 +24,17 @@ interface GitHubService {
         @Path("owner") owner: String,
         @Path("repo") repo: String
     ): Call<List<User>>
+
+    @GET("orgs/{org}/repos?per_page=100")
+    suspend fun getOrgRepos(
+        @Path("org") org: String
+    ): Response<List<Repo>>
+
+    @GET("repos/{owner}/{repo}/contributors?per_page=100")
+    suspend fun getRepoContributors(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String
+    ): Response<List<User>>
 }
 
 @Serializable
