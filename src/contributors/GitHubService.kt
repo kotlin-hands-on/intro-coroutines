@@ -38,6 +38,17 @@ interface GitHubService {
         @Path("owner") owner: String,
         @Path("repo") repo: String
     ): Response<List<User>>
+
+    @GET("orgs/{org}/repos?per_page=100")
+    fun getOrgReposRx(
+        @Path("org") org: String
+    ): Observable<Response<List<Repo>>>
+
+    @GET("repos/{owner}/{repo}/contributors?per_page=100")
+    fun getRepoContributorsRx(
+        @Path("owner") owner: String,
+        @Path("repo") repo: String
+    ):  Observable<Response<List<User>>>
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -17,7 +17,9 @@ enum class Variant {
     CONCURRENT,       // Request5Concurrent
     NOT_CANCELLABLE,  // Request6NotCancellable
     PROGRESS,         // Request6Progress
-    CHANNELS          // Request7Channels
+    CHANNELS,         // Request7Channels
+    RX,               // Request8Rx
+    RX_PROGRESS       // Request9RxProgress
 }
 
 interface Contributors: CoroutineScope {
@@ -107,6 +109,20 @@ interface Contributors: CoroutineScope {
                         }
                     }
                 }.setUpCancellation()
+            }
+            RX -> {  // Using RxJava
+                loadContributorsReactive(service, req) { users, completed ->
+                    SwingUtilities.invokeLater {
+                        updateResults(users, startTime, completed)
+                    }
+                }
+            }
+            RX_PROGRESS -> {  // Using RxJava and showing progress
+                loadContributorsReactiveProgress(service, req) { users, completed ->
+                    SwingUtilities.invokeLater {
+                        updateResults(users, startTime, completed)
+                    }
+                }
             }
         }
     }
