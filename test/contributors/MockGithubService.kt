@@ -1,6 +1,5 @@
 package contributors
 
-import io.reactivex.Observable
 import kotlinx.coroutines.delay
 import retrofit2.Call
 import retrofit2.Response
@@ -24,13 +23,5 @@ object MockGithubService : GitHubService {
         val testRepo = reposMap.getValue(repo)
         delay(testRepo.delay)
         return Response.success(testRepo.users)
-    }
-
-    override fun getOrgReposRx(org: String): Observable<Response<List<Repo>>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getRepoContributorsRx(owner: String, repo: String): Observable<Response<List<User>>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
