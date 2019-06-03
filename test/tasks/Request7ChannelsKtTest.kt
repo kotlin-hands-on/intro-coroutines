@@ -1,26 +1,27 @@
 package tasks
 
-import contributors.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.test.runBlockingTest
+import contributors.MockGithubService
+import contributors.concurrentProgressResults
+import contributors.testRequestData
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
 class Request7ChannelsKtTest {
     @Test
-    fun testChannels() = runBlockingTest {
-        val startTime = currentTime
+    fun testChannels() = runBlocking {
+        val startTime = System.currentTimeMillis()
         var index = 0
         loadContributorsChannels(MockGithubService, testRequestData) {
                 users, _ ->
             val expected = concurrentProgressResults[index++]
-            val virtualTime = currentTime - startTime
+            val time = System.currentTimeMillis() - startTime
+            /*
+            // TODO: uncomment this assertion
             Assert.assertEquals("Expected intermediate results after virtual ${expected.timeFromStart} ms:",
                 expected.timeFromStart, virtualTime)
-            Assert.assertEquals("Wrong progress result after $virtualTime:", expected.users, users)
+            */
+            Assert.assertEquals("Wrong progress result after $time:", expected.users, users)
         }
-
     }
 }

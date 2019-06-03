@@ -1,6 +1,8 @@
 package tasks
 
-import contributors.*
+import contributors.MockGithubService
+import contributors.expectedResults
+import contributors.testRequestData
 import org.junit.Assert
 import org.junit.Test
 
