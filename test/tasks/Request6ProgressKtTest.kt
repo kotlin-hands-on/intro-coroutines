@@ -18,10 +18,10 @@ class Request6ProgressKtTest {
             val time = System.currentTimeMillis() - startTime
             /*
             // TODO: uncomment this assertion
-            Assert.assertEquals("Expected intermediate results after virtual ${expected.timeFromStart} ms:",
+            Assert.assertEquals("Expected intermediate result after virtual ${expected.timeFromStart} ms:",
                 expected.timeFromStart, time)
             */
-            Assert.assertEquals("Wrong progress result after $time:", expected.users, users)
+            Assert.assertEquals("Wrong intermediate result after $time:", expected.users, users)
         }
     }
 }
