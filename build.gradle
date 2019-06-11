@@ -26,14 +26,14 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
     implementation 'ch.qos.logback:logback-classic:1.0.13'
 
-    def retrofit_version = '2.5.1-SNAPSHOT'
+    def retrofit_version = '2.6.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.1-SNAPSHOT'
-    implementation 'com.squareup.retrofit2:retrofit-mock:2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
 
     testImplementation "junit:junit:4.12"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
