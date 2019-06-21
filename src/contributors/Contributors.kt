@@ -79,11 +79,9 @@ interface Contributors: CoroutineScope {
                 }.setUpCancellation()
             }
             CONCURRENT -> { // Performing requests concurrently
-                launch(Dispatchers.Default) {
+                launch {
                     val users = loadContributorsConcurrent(service, req)
-                    withContext(Dispatchers.Main) {
-                        updateResults(users, startTime)
-                    }
+                    updateResults(users, startTime)
                 }.setUpCancellation()
             }
             NOT_CANCELLABLE -> { // Performing requests in a non-cancellable way
