@@ -32,30 +32,32 @@ val testRepos = listOf(
 
 val repos = testRepos.mapIndexed { index, testRepo -> Repo(index.toLong(), testRepo.name) }
 
-val reposMap = testRepos.associate { it.name to it }
+val reposMap = testRepos.associateBy(TestRepo::name)
+
+val expectedUsersList = listOf(
+    User("user-2", 100),
+    User("user-3", 60),
+    User("user-1", 50)
+)
 
 val expectedResults = TestResults(
     4000, // 1000 + (1000 + 1200 + 800)
-    listOf(
-        User("user-2", 100),
-        User("user-3", 60),
-        User("user-1", 50)
-    )
+    expectedUsersList
 )
 
 val expectedConcurrentResults = TestResults(
     2200, // 1000 + max(1000, 1200, 800)
-    expectedResults.users
+    expectedUsersList
 )
 
 val progressResults = listOf(
     TestResults(
-        2000, // 1000 + 1000
+        2000, // 1000 repos + 1000 first repo
         listOf(User(login = "user-2", contributions = 20), User(login = "user-1", contributions = 10))
     ),
     TestResults(
         3200, // 2000 + 1200
-        listOf(User(login = "user-2", contributions = 50), User(login = "user-1", contributions = 50))
+        listOf(User(login = "user-1", contributions = 50), User(login = "user-2", contributions = 50))
     ),
     expectedResults
 )
