@@ -17,7 +17,8 @@ enum class Variant {
     CONCURRENT,       // Request5Concurrent
     NOT_CANCELLABLE,  // Request6NotCancellable
     PROGRESS,         // Request6Progress
-    CHANNELS          // Request7Channels
+    CHANNELS,          // Request7Channels
+    FLOWS
 }
 
 interface Contributors: CoroutineScope {
@@ -50,7 +51,7 @@ interface Contributors: CoroutineScope {
         val req = RequestData(username, password, org)
 
         clearResults()
-        val service = createGitHubService(req.username, req.password)
+        val service = createGithubService(req.username, req.password)
 
         val startTime = System.currentTimeMillis()
         when (getSelectedVariant()) {
@@ -79,9 +80,11 @@ interface Contributors: CoroutineScope {
                 }.setUpCancellation()
             }
             CONCURRENT -> { // Performing requests concurrently
-                launch {
+                launch(Dispatchers.Default) {
                     val users = loadContributorsConcurrent(service, req)
-                    updateResults(users, startTime)
+                    withContext(Dispatchers.Main) {
+                        updateResults(users, startTime)
+                    }
                 }.setUpCancellation()
             }
             NOT_CANCELLABLE -> { // Performing requests in a non-cancellable way
@@ -102,6 +105,15 @@ interface Contributors: CoroutineScope {
             CHANNELS -> {  // Performing requests concurrently and showing progress
                 launch(Dispatchers.Default) {
                     loadContributorsChannels(service, req) { users, completed ->
+                        withContext(Dispatchers.Main) {
+                            updateResults(users, startTime, completed)
+                        }
+                    }
+                }.setUpCancellation()
+            }
+            FLOWS -> {
+                launch(Dispatchers.Default) {
+                    loadContributorsFlows(service, req) { users, completed ->
                         withContext(Dispatchers.Main) {
                             updateResults(users, startTime, completed)
                         }

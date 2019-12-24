@@ -15,4 +15,14 @@ TODO: Write aggregation code.
  You can use 'Navigate | Test' menu action (note the shortcut) to navigate to the test.
 */
 fun List<User>.aggregate(): List<User> =
-    this
+    groupBy { it.login }
+        .map { (login, contributions) -> User(login, contributions.sumBy { it.contributions })  }
+        .sortedByDescending { it.contributions }
+
+//fun List<User>.aggregate(): List<User> {
+//    val users = mutableMapOf<String, Int>()
+//    forEach { user ->
+//        users.merge(user.login, user.contributions, Int::plus)
+//    }
+//    return users.entries.sortedByDescending { it.value }.map { User(it.key, it.value) }
+//}
