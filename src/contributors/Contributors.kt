@@ -2,8 +2,8 @@ package contributors
 
 import contributors.Contributors.LoadingStatus.*
 import contributors.Variant.*
+import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
-import kotlinx.coroutines.swing.Swing
 import tasks.*
 import java.awt.event.ActionListener
 import javax.swing.SwingUtilities
@@ -111,18 +111,30 @@ interface Contributors: CoroutineScope {
                 }.setUpCancellation()
             }
             RX -> {  // Using RxJava
-                loadContributorsReactive(service, req) { users, completed ->
-                    SwingUtilities.invokeLater {
-                        updateResults(users, startTime, completed)
-                    }
-                }
+                loadContributorsReactive(service, req)
+                    .subscribe { users ->
+                        SwingUtilities.invokeLater {
+                            updateResults(users, startTime)
+                        }
+                    }.setUpCancellation()
             }
-            RX_PROGRESS -> {  // Using RxJava and showing progress
-                loadContributorsReactiveProgress(service, req) { users, completed ->
-                    SwingUtilities.invokeLater {
-                        updateResults(users, startTime, completed)
-                    }
-                }
+            RX_PROGRESS -> {  // Using RxJava and showing progress { users, completed ->
+                loadContributorsReactiveProgress(service, req)
+                    .subscribe({
+                        SwingUtilities.invokeLater {
+                            updateResults(it, startTime, false)
+                        }
+                    }, {
+                        SwingUtilities.invokeLater {
+                            setLoadingStatus("error ${it.message}", false)
+                            setActionsStatus(newLoadingEnabled = true)
+                        }
+                    }, {
+                        SwingUtilities.invokeLater {
+                            updateLoadingStatus(COMPLETED, startTime)
+                            setActionsStatus(newLoadingEnabled = true)
+                        }
+                    }).setUpCancellation()
             }
         }
     }
@@ -184,6 +196,22 @@ interface Contributors: CoroutineScope {
             setActionsStatus(newLoadingEnabled = true)
             removeCancelListener(listener)
         }
+    }
+
+    private fun Disposable.setUpCancellation() {
+        // make active the 'cancel' button
+        setActionsStatus(newLoadingEnabled = false, cancellationEnabled = true)
+
+        val loadingDisposable = this
+
+        // cancel the loading job if the 'cancel' button was clicked
+        var listener: ActionListener
+        listener = ActionListener {
+            loadingDisposable.dispose()
+            updateLoadingStatus(CANCELED)
+            setActionsStatus(newLoadingEnabled = true)
+        }
+        addCancelListener(listener)
     }
 
     fun loadInitialParams() {
