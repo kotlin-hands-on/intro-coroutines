@@ -18,11 +18,3 @@ fun List<User>.aggregate(): List<User> =
     groupBy { it.login }
         .map { (login, contributions) -> User(login, contributions.sumBy { it.contributions })  }
         .sortedByDescending { it.contributions }
-
-//fun List<User>.aggregate(): List<User> {
-//    val users = mutableMapOf<String, Int>()
-//    forEach { user ->
-//        users.merge(user.login, user.contributions, Int::plus)
-//    }
-//    return users.entries.sortedByDescending { it.value }.map { User(it.key, it.value) }
-//}

@@ -24,30 +24,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import java.util.*
 
-interface GitHubService1 {
-    @GET("orgs/{org}/repos?per_page=100")
-    fun getOrgReposCall(
-        @Path("org") org: String
-    ): Call<List<Repo>>
-
-    @GET("repos/{owner}/{repo}/contributors?per_page=100")
-    fun getRepoContributorsCall(
-        @Path("owner") owner: String,
-        @Path("repo") repo: String
-    ): Call<List<User>>
-
-    @GET("orgs/{org}/repos?per_page=100")
-    suspend fun getOrgRepos(
-        @Path("org") org: String
-    ): Response<List<Repo>>
-
-    @GET("repos/{owner}/{repo}/contributors?per_page=100")
-    suspend fun getRepoContributors(
-        @Path("owner") owner: String,
-        @Path("repo") repo: String
-    ): Response<List<User>>
-}
-
 interface GitHubService {
     suspend fun getOrgRepos(org: String): List<Repo>
 
@@ -97,26 +73,4 @@ fun createGithubService(username: String, password: String): GitHubService {
             client.get(path = "repos/$owner/$repo/contributors?per_page=100")
 
     }
-}
-
-fun createGitHubService1(username: String, password: String): GitHubService {
-    val authToken = "Basic " + Base64.getEncoder().encode("$username:$password".toByteArray()).toString(Charsets.UTF_8)
-    val httpClient = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val original = chain.request()
-            val builder = original.newBuilder()
-                .header("Accept", "application/vnd.github.v3+json")
-                .header("Authorization", authToken)
-            val request = builder.build()
-            chain.proceed(request)
-        }
-        .build()
-
-    val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.github.com")
-        .addConverterFactory(JacksonConverterFactory.create(jacksonObjectMapper()))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .client(httpClient)
-        .build()
-    return retrofit.create(GitHubService::class.java)
 }

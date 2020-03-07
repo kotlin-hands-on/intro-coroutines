@@ -10,13 +10,13 @@ import javax.swing.SwingUtilities
 import kotlin.coroutines.CoroutineContext
 
 enum class Variant {
-    BLOCKING,         // Request1Blocking
-    BACKGROUND,       // Request2Background
-    CALLBACKS,        // Request3Callbacks
-    SUSPEND,          // Request4Coroutine
-    CONCURRENT,       // Request5Concurrent
-    NOT_CANCELLABLE,  // Request6NotCancellable
-    PROGRESS,         // Request6Progress
+//    BLOCKING,         // Request1Blocking
+//    BACKGROUND,       // Request2Background
+//    CALLBACKS,        // Request3Callbacks
+//    SUSPEND,          // Request4Coroutine
+//    CONCURRENT,       // Request5Concurrent
+//    NOT_CANCELLABLE,  // Request6NotCancellable
+//    PROGRESS,         // Request6Progress
     CHANNELS,          // Request7Channels
     FLOWS
 }
@@ -55,53 +55,6 @@ interface Contributors: CoroutineScope {
 
         val startTime = System.currentTimeMillis()
         when (getSelectedVariant()) {
-            BLOCKING -> { // Blocking UI thread
-                val users = loadContributorsBlocking(service, req)
-                updateResults(users, startTime)
-            }
-            BACKGROUND -> { // Blocking a background thread
-                loadContributorsBackground(service, req) { users ->
-                    SwingUtilities.invokeLater {
-                        updateResults(users, startTime)
-                    }
-                }
-            }
-            CALLBACKS -> { // Using callbacks
-                loadContributorsCallbacks(service, req) { users ->
-                    SwingUtilities.invokeLater {
-                        updateResults(users, startTime)
-                    }
-                }
-            }
-            SUSPEND -> { // Using coroutines
-                launch {
-                    val users = loadContributorsSuspend(service, req)
-                    updateResults(users, startTime)
-                }.setUpCancellation()
-            }
-            CONCURRENT -> { // Performing requests concurrently
-                launch(Dispatchers.Default) {
-                    val users = loadContributorsConcurrent(service, req)
-                    withContext(Dispatchers.Main) {
-                        updateResults(users, startTime)
-                    }
-                }.setUpCancellation()
-            }
-            NOT_CANCELLABLE -> { // Performing requests in a non-cancellable way
-                launch {
-                    val users = loadContributorsNotCancellable(service, req)
-                    updateResults(users, startTime)
-                }.setUpCancellation()
-            }
-            PROGRESS -> { // Showing progress
-                launch(Dispatchers.Default) {
-                    loadContributorsProgress(service, req) { users, completed ->
-                        withContext(Dispatchers.Main) {
-                            updateResults(users, startTime, completed)
-                        }
-                    }
-                }.setUpCancellation()
-            }
             CHANNELS -> {  // Performing requests concurrently and showing progress
                 launch(Dispatchers.Default) {
                     loadContributorsChannels(service, req) { users, completed ->

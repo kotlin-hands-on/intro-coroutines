@@ -12,7 +12,7 @@ fun loadStoredParams(): Params {
             get("username", ""),
             get("password", ""),
             get("org", "kotlin"),
-            Variant.valueOf(get("variant", Variant.BLOCKING.name))
+            Variant.valueOf(get("variant", Variant.CHANNELS.name))
         )
     }
 }
