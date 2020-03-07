@@ -13,28 +13,16 @@ suspend fun loadContributorsFlows(
 ) {
     coroutineScope {
         val repos = service.getOrgRepos(req.org)
-            /*.also { logRepos(req, it) }*/
 
-        val userFlow = flow {
+        val userFlow = channelFlow {
             for (repo in repos){
                 launch {
                     val users = service.getRepoContributors(req.org, repo.name)
-                    emit(users)
+                    send(users)
                 }
             }
         }
 
-//        var allUsers = emptyList<User>()
-//        repeat(repos.size) {
-//            val users = channel.receive()
-//            allUsers = (allUsers + users).aggregate()
-//            updateResults(allUsers, it == repos.lastIndex)
-//        }
-/*        userFlow
-            .scanReduce { accumulator, value -> accumulator + value }
-            .collectIndexed { index, value -> updateResults(value, index == repos.lastIndex) }*/
-
-        val counter = AtomicInteger(0)
         var allUsers = emptyList<User>()
         userFlow.collectIndexed { i, users ->
             allUsers = (allUsers + users).aggregate()
