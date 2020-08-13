@@ -19,7 +19,7 @@ class Request7ChannelsKtTest {
             /*
             // TODO: uncomment this assertion
             Assert.assertEquals("Expected intermediate result after virtual ${expected.timeFromStart} ms:",
-                expected.timeFromStart, virtualTime)
+                expected.timeFromStart, time)
             */
             Assert.assertEquals("Wrong intermediate result after $time:", expected.users, users)
         }
