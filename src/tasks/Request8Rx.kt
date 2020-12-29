@@ -26,6 +26,5 @@ fun loadContributorsReactive(
         .flatMapIterable { it.bodyList() }
         .toList()
 
-    return allUsers
-        .map { it.aggregate() }
+    return allUsers.map { it.aggregate() }
 }

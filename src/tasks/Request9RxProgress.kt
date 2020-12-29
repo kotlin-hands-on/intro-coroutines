@@ -23,11 +23,8 @@ fun loadContributorsReactiveProgress(
                 .doOnNext { response -> logUsers(repo, response) }
                 .map { response -> response.bodyList() }
         }
-
-    var allUsers = emptyList<User>()
-
-    return repoUsers.map { users: List<User> ->
-        allUsers = (allUsers + users).aggregate()
-        allUsers
-    }
+    return repoUsers
+        .scan(listOf()) { allUsers, users ->
+            (allUsers + users).aggregate()
+        }
 }
