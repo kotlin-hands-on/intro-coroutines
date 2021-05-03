@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Test
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class Request7ChannelsKtTest {
     @Test
     fun testChannels() = runBlockingTest {
