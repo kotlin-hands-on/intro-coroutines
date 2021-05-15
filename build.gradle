@@ -1,6 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.4.20'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.0'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.0'
 }
 
 group 'intro-coroutines'
@@ -15,7 +15,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
-    def coroutines_version = '1.4.2'
+    def coroutines_version = '1.5.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version"

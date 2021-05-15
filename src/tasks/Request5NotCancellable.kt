@@ -4,6 +4,7 @@ import contributors.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.coroutineContext
 
+@OptIn(DelicateCoroutinesApi::class)
 suspend fun loadContributorsNotCancellable(service: GitHubService, req: RequestData): List<User> {
     val repos = service
         .getOrgRepos(req.org)
