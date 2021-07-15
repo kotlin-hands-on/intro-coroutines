@@ -145,7 +145,7 @@ fun JPanel.addWideSeparator() {
 
 fun setDefaultFontSize(size: Float) {
     for (key in UIManager.getLookAndFeelDefaults().keys.toTypedArray()) {
-        if (key.toString().toLowerCase().contains("font")) {
+        if (key.toString().lowercase().contains("font")) {
             val font = UIManager.getDefaults().getFont(key) ?: continue
             val newFont = font.deriveFont(size)
             UIManager.put(key, newFont)
