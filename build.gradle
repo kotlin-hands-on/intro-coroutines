@@ -1,6 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.5.0'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.20'
 }
 
 group 'intro-coroutines'
@@ -13,24 +13,24 @@ repositories {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "org.jetbrains.kotlin:kotlin-reflect"
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
 
-    def coroutines_version = '1.5.0'
+    def coroutines_version = '1.5.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-debug:$coroutines_version"
 
-    implementation 'ch.qos.logback:logback-classic:1.0.13'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
 
     def retrofit_version = '2.9.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-    implementation 'com.squareup.okhttp3:okhttp:4.3.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
