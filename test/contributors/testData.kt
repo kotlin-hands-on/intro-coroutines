@@ -32,7 +32,7 @@ val testRepos = listOf(
 
 val repos = testRepos.mapIndexed { index, testRepo -> Repo(index.toLong(), testRepo.name) }
 
-val reposMap = testRepos.associate { it.name to it }
+val reposMap = testRepos.associateBy { it.name }
 
 val expectedResults = TestResults(
     4000, // 1000 + (1000 + 1200 + 800)

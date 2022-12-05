@@ -4,13 +4,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.currentTime
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-@UseExperimental(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class SampleTest {
     @Test
-    fun testDelayInSuspend() = runBlockingTest {
+    fun testDelayInSuspend() = runTest {
         val realStartTime = System.currentTimeMillis()
         val virtualStartTime = currentTime
 
@@ -26,7 +27,7 @@ class SampleTest {
     }
 
     @Test
-    fun testDelayInLaunch() = runBlockingTest {
+    fun testDelayInLaunch() = runTest {
         val realStartTime = System.currentTimeMillis()
         val virtualStartTime = currentTime
 

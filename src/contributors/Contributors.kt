@@ -3,11 +3,11 @@ package contributors
 import contributors.Contributors.LoadingStatus.*
 import contributors.Variant.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.swing.Swing
 import tasks.*
 import java.awt.event.ActionListener
 import javax.swing.SwingUtilities
 import kotlin.coroutines.CoroutineContext
+import kotlin.system.exitProcess
 
 enum class Variant {
     BLOCKING,         // Request1Blocking
@@ -38,7 +38,7 @@ interface Contributors: CoroutineScope {
         addOnWindowClosingListener {
             job.cancel()
             saveParams()
-            System.exit(0)
+            exitProcess(0)
         }
 
         // Load stored params (user & password values)

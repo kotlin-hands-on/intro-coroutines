@@ -19,7 +19,7 @@ class ContributorsUI : JFrame("GitHub Contributors"), Contributors {
     private val username = JTextField(20)
     private val password = JPasswordField(20)
     private val org = JTextField(20)
-    private val variant = JComboBox<Variant>(Variant.values())
+    private val variant = JComboBox(Variant.values())
     private val load = JButton("Load contributors")
     private val cancel = JButton("Cancel").apply { isEnabled = false }
 
