@@ -43,10 +43,12 @@ class ContributorsUI : JFrame("GitHub Contributors"), Contributors {
             addLabeled("Organization", org)
             addLabeled("Variant", variant)
             addWideSeparator()
-            addWide(JPanel().apply {
-                add(load)
-                add(cancel)
-            })
+            addWide(
+                JPanel().apply {
+                    add(load)
+                    add(cancel)
+                },
+            )
             addWide(resultsScroll) {
                 weightx = 1.0
                 weighty = 1.0
@@ -63,13 +65,15 @@ class ContributorsUI : JFrame("GitHub Contributors"), Contributors {
     override fun updateContributors(users: List<User>) {
         if (users.isNotEmpty()) {
             log.info("Updating result with ${users.size} rows")
-        }
-        else {
+        } else {
             log.info("Clearing result")
         }
-        resultsModel.setDataVector(users.map {
-            arrayOf(it.login, it.contributions)
-        }.toTypedArray(), COLUMNS)
+        resultsModel.setDataVector(
+            users.map {
+                arrayOf(it.login, it.contributions)
+            }.toTypedArray(),
+            COLUMNS,
+        )
     }
 
     override fun setLoadingStatus(text: String, iconRunning: Boolean) {
@@ -115,26 +119,35 @@ class ContributorsUI : JFrame("GitHub Contributors"), Contributors {
 }
 
 fun JPanel.addLabeled(label: String, component: JComponent) {
-    add(JLabel(label), GridBagConstraints().apply {
-        gridx = 0
-        insets = INSETS
-    })
-    add(component, GridBagConstraints().apply {
-        gridx = 1
-        insets = INSETS
-        anchor = GridBagConstraints.WEST
-        fill = GridBagConstraints.HORIZONTAL
-        weightx = 1.0
-    })
+    add(
+        JLabel(label),
+        GridBagConstraints().apply {
+            gridx = 0
+            insets = INSETS
+        },
+    )
+    add(
+        component,
+        GridBagConstraints().apply {
+            gridx = 1
+            insets = INSETS
+            anchor = GridBagConstraints.WEST
+            fill = GridBagConstraints.HORIZONTAL
+            weightx = 1.0
+        },
+    )
 }
 
 fun JPanel.addWide(component: JComponent, constraints: GridBagConstraints.() -> Unit = {}) {
-    add(component, GridBagConstraints().apply {
-        gridx = 0
-        gridwidth = 2
-        insets = INSETS
-        constraints()
-    })
+    add(
+        component,
+        GridBagConstraints().apply {
+            gridx = 0
+            gridwidth = 2
+            insets = INSETS
+            constraints()
+        },
+    )
 }
 
 fun JPanel.addWideSeparator() {

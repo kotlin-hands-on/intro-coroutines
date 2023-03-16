@@ -17,13 +17,13 @@ class SampleTest {
 
         foo()
 
-        println("${System.currentTimeMillis() - realStartTime} ms")  // ~ 6 ms
-        println("${currentTime - virtualStartTime} ms")              // 1000 ms
+        println("${System.currentTimeMillis() - realStartTime} ms") // ~ 6 ms
+        println("${currentTime - virtualStartTime} ms") // 1000 ms
     }
 
     suspend fun foo() {
         delay(1000) // auto-advances without delay
-        println("foo")       // executes eagerly when foo() is called
+        println("foo") // executes eagerly when foo() is called
     }
 
     @Test
@@ -33,14 +33,14 @@ class SampleTest {
 
         bar()
 
-        println("${System.currentTimeMillis() - realStartTime} ms")  // ~ 11 ms
-        println("${currentTime - virtualStartTime} ms")              // 1000 ms
+        println("${System.currentTimeMillis() - realStartTime} ms") // ~ 11 ms
+        println("${currentTime - virtualStartTime} ms") // 1000 ms
     }
 
     suspend fun bar() = coroutineScope {
         launch {
             delay(1000) // auto-advances without delay
-            println("bar")       // executes eagerly when bar() is called
+            println("bar") // executes eagerly when bar() is called
         }
     }
 }

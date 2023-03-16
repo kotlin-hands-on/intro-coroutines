@@ -10,8 +10,11 @@ class Request1BlockingKtTest {
     @Test
     fun testAggregation() {
         val users = loadContributorsBlocking(MockGithubService, testRequestData)
-        Assert.assertEquals("List of contributors should be sorted " +
+        Assert.assertEquals(
+            "List of contributors should be sorted " +
                 "by the number of contributions in a descending order",
-            expectedResults.users, users)
+            expectedResults.users,
+            users,
+        )
     }
 }

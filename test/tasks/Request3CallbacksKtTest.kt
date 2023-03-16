@@ -12,7 +12,8 @@ class Request3CallbacksKtTest {
         loadContributorsCallbacks(MockGithubService, testRequestData) {
             Assert.assertEquals(
                 "Wrong result for 'loadContributorsCallbacks'",
-                expectedResults.users, it
+                expectedResults.users,
+                it,
             )
         }
     }

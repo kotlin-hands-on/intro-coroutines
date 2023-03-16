@@ -10,17 +10,17 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.system.exitProcess
 
 enum class Variant {
-    BLOCKING,         // Request1Blocking
-    BACKGROUND,       // Request2Background
-    CALLBACKS,        // Request3Callbacks
-    SUSPEND,          // Request4Coroutine
-    CONCURRENT,       // Request5Concurrent
-    NOT_CANCELLABLE,  // Request6NotCancellable
-    PROGRESS,         // Request6Progress
-    CHANNELS          // Request7Channels
+    BLOCKING, // Request1Blocking
+    BACKGROUND, // Request2Background
+    CALLBACKS, // Request3Callbacks
+    SUSPEND, // Request4Coroutine
+    CONCURRENT, // Request5Concurrent
+    NOT_CANCELLABLE, // Request6NotCancellable
+    PROGRESS, // Request6Progress
+    CHANNELS, // Request7Channels
 }
 
-interface Contributors: CoroutineScope {
+interface Contributors : CoroutineScope {
 
     val job: Job
 
@@ -99,7 +99,7 @@ interface Contributors: CoroutineScope {
                     }
                 }.setUpCancellation()
             }
-            CHANNELS -> {  // Performing requests concurrently and showing progress
+            CHANNELS -> { // Performing requests concurrently and showing progress
                 launch(Dispatchers.Default) {
                     loadContributorsChannels(service, req) { users, completed ->
                         withContext(Dispatchers.Main) {
@@ -122,7 +122,7 @@ interface Contributors: CoroutineScope {
     private fun updateResults(
         users: List<User>,
         startTime: Long,
-        completed: Boolean = true
+        completed: Boolean = true,
     ) {
         updateContributors(users)
         updateLoadingStatus(if (completed) COMPLETED else IN_PROGRESS, startTime)
@@ -133,19 +133,21 @@ interface Contributors: CoroutineScope {
 
     private fun updateLoadingStatus(
         status: LoadingStatus,
-        startTime: Long? = null
+        startTime: Long? = null,
     ) {
         val time = if (startTime != null) {
             val time = System.currentTimeMillis() - startTime
             "${(time / 1000)}.${time % 1000 / 100} sec"
-        } else ""
+        } else {
+            ""
+        }
 
         val text = "Loading status: " +
-                when (status) {
-                    COMPLETED -> "completed in $time"
-                    IN_PROGRESS -> "in progress $time"
-                    CANCELED -> "canceled"
-                }
+            when (status) {
+                COMPLETED -> "completed in $time"
+                IN_PROGRESS -> "in progress $time"
+                CANCELED -> "canceled"
+            }
         setLoadingStatus(text, status == IN_PROGRESS)
     }
 
@@ -178,8 +180,7 @@ interface Contributors: CoroutineScope {
         val params = getParams()
         if (params.username.isEmpty() && params.password.isEmpty()) {
             removeStoredParams()
-        }
-        else {
+        } else {
             saveParams(params)
         }
     }
