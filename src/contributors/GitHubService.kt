@@ -7,12 +7,11 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
-import java.util.Base64
+import java.util.*
 
 interface GitHubService {
     @GET("orgs/{org}/repos?per_page=100")
@@ -36,7 +35,7 @@ data class Repo(
 @Serializable
 data class User(
     val login: String,
-    val contributions: Int
+    var contributions: Int
 )
 
 @Serializable
