@@ -1,8 +1,8 @@
 package tasks
 
 import contributors.User
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class AggregationKtTest {
     @Test
@@ -17,6 +17,6 @@ class AggregationKtTest {
             User("Alice", 8),
             User("Charlie", 3)
         )
-        Assert.assertEquals("Wrong result for 'aggregation'", expected, actual)
+        Assertions.assertEquals(expected, actual, "Wrong result for 'aggregation'")
     }
 }

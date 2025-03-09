@@ -4,8 +4,8 @@ import contributors.MockGithubService
 import contributors.progressResults
 import contributors.testRequestData
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
-import org.junit.Test
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 class Request6ProgressKtTest {
     @Test
@@ -18,10 +18,10 @@ class Request6ProgressKtTest {
             val time = System.currentTimeMillis() - startTime
             /*
             // TODO: uncomment this assertion
-            Assert.assertEquals("Expected intermediate result after virtual ${expected.timeFromStart} ms:",
-                expected.timeFromStart, time)
+            Assertions.assertEquals(expected.timeFromStart, time,
+                "Expected intermediate result after virtual ${expected.timeFromStart} ms:")
             */
-            Assert.assertEquals("Wrong intermediate result after $time:", expected.users, users)
+            Assertions.assertEquals(expected.users, users, "Wrong intermediate result after $time:")
         }
     }
 }
