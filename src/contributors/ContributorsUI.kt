@@ -68,7 +68,7 @@ class ContributorsUI : JFrame("GitHub Contributors"), Contributors {
             log.info("Clearing result")
         }
         resultsModel.setDataVector(users.map {
-            arrayOf(it.login, it.contributions)
+            arrayOf<Any>(it.login, it.contributions)
         }.toTypedArray(), COLUMNS)
     }
 
